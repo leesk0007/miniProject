@@ -81,42 +81,52 @@ python App.py
 
 **2. 대시보드 접속 및 연결**
 웹 브라우저를 열고 플라스크 서버 IP(예: `http://라즈베리파이IP:8080`)로 접속한 뒤, 브로커 IP를 입력하고 'Connect' 버튼을 누릅니다. 정상적으로 연결 시 성공 로그 메시지가 출력됩니다.
+
 <img width="1134" height="640" alt="MQTT 연결 화면" src="https://github.com/user-attachments/assets/412337b2-0bb6-48b5-b44f-88d3df8d9daf" />
 
 **3. 시나리오 설정**
 실제 환경 구축 대신 책상 위 환경을 현관문으로, 작은 모형 자동차를 방문객으로 가정하여 시연을 진행합니다.
+
 <img width="740" height="533" alt="시뮬레이션 환경 구축" src="https://github.com/user-attachments/assets/a5b31b4d-7e76-4083-90d5-80cb575dc597" />
 
 **4. 데이터 수집 시작**
 `Mqtt.py`를 백그라운드에서 실행하면 라즈베리파이는 주기적으로 각종 센서 데이터를 읽고 영상과 함께 브로커를 거쳐 웹 인터페이스에 출력하기 시작합니다.
+
 <img width="746" height="430" alt="정상 데이터 출력 진입" src="https://github.com/user-attachments/assets/8beff195-9ba2-431d-8a2b-ab27c1abe052" /> 
 
 **5. 방문객 이벤트 감지 (LED 활성화)**
 모형 자동차(사람)가 초음파 센서 근처 지정 거리(30cm 이하)로 진입하면 이벤트를 인식하여 즉시 물리 LED 모듈에 불이 켜집니다.
+
 <img width="754" height="477" alt="물리 LED 점등" src="https://github.com/user-attachments/assets/7b20f298-8377-414f-8365-ddf2433265cb" />
 
 **6. 웹 스트리밍 시작**
 움직임 감지와 동시에 브라우저의 전용 영역에 카메라 실시간 스트리밍이 노출되며, LED 동작 이벤트가 로그에 실시간으로 반영됩니다.
+
 <img width="904" height="625" alt="웹 카메라 송출" src="https://github.com/user-attachments/assets/41e552fa-cd5e-4d5f-885e-753a600a16db" />
 
 **7. 방문객 이탈로 인한 센서 해제**
 모형 자동차(사람)가 초음파 센서 측정 범위에서 벗어나면, 시스템은 상태 변화를 인식하고 자동으로 LED 전원을 차단합니다.
+
 <img width="770" height="590" alt="물리 LED 소등" src="https://github.com/user-attachments/assets/854ff394-5e8c-4a12-9fe5-796bf745a053" /> 
 
 **8. 웹 스트리밍 중단**
 LED 소등과 연동되어 브라우저 내의 카메라 스트리밍 요소가 사용자로부터 닫히며 자원 낭비를 방지합니다.
+
 <img width="988" height="602" alt="카메라 화면 닫힘" src="https://github.com/user-attachments/assets/83b679a5-5b7b-4841-a452-c11b9645d43f" />
 
 **9. 수동 데이터 모니터링 제어 (OFF)**
 회로의 스위치 부품을 물리적으로 클릭하면 센서 데이터 전송 루틴이 즉시 중단되며, 상태 로그에 "센서데이터 발행 중지" 메세지가 수신됩니다.
+
 <img width="807" height="562" alt="발행 중지 제어" src="https://github.com/user-attachments/assets/26f930e8-8923-4b47-adff-d84ea793d0a7" />
 
 **10. 수동 데이터 모니터링 복구 (ON)**
 잠시 후 동일하게 스위치를 재클릭 시 중단되었던 데이터 발행 기능이 다시 구동되어 정상적인 운영 상태로 복원됩니다.
+
 <img width="787" height="501" alt="발행 재개 제어" src="https://github.com/user-attachments/assets/b55682b4-feea-4bd7-b099-b5db5bcf8e61" />
 
 **11. 수집 데이터 시각적 차트 제공**
 우측 하단이나 별도의 차트 UI 영역을 통하여 수집된 데이터의 시간대별 온/습도 추세와 움직임 감지 빈도를 차트 형태로 직관적으로 체크할 수 있습니다.
+
 <img width="843" height="315" alt="차트 시각화 다이어그램" src="https://github.com/user-attachments/assets/4466e366-6095-4f14-aed4-0a7897d8aae7" /> 
 
 ---
