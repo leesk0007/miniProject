@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Raspberry Pi CCTV 시스템</title>
+    <!-- MQTT Paho 라이브러리 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.2/mqttws31.min.js"></script>
+    <!-- Chart.js 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- MQTT 관련 스크립트 -->
+    <script src="./static/mqttio.js"></script>
+    <script>
+        // 페이지 로드 시 기본 브로커 IP를 URL 호스트네임으로 설정
+        window.addEventListener("load", function () {
+            const url = new URL(window.location.href);
+            const ip = url.hostname;
+            document.getElementById("broker").placeholder = ip; // 기본 IP 주소 설정
+        });
+    </script>
+    <style>
+        /* 실시간 카메라 스트리밍 표시 */
+        .camera-streaming {
+            display: block;
+        }
+
+        /* 차트 컨테이너 스타일 */
+        #charts {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+
+        .chart-container {
+            width: 45%;
+            /* 각 차트의 너비를 45%로 설정 */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 페이지 제목 -->
+    <h2>Raspberry Pi CCTV 시스템</h2>
+    <hr>
+
+    <!-- MQTT 연결 설정 -->
+    <div>
+        <h3>MQTT 연결</h3>
+        <b>Broker IP:</b>
+        <input id="broker" type="text" placeholder=""> <!-- MQTT 브로커 주소 입력 -->
+        <button onclick="connect()">Connect</button> <!-- 연결 버튼 -->
+        <button onclick="disconnect()">Disconnect</button> <!-- 연결 해제 버튼 -->
+    </div>
+    <hr>
+
+    <!-- 센서 데이터 표시 -->
+    <div>
+        <h3>센서 데이터</h3>
+        <p>온도: <span id="temperature">--</span></p> <!-- 온도 표시 -->
+        <p>습도: <span id="humidity">--</span></p> <!-- 습도 표시 -->
+        <p>상태: <span id="day-night-status">갱신 중...</span></p> <!-- 낮/밤 상태 -->
+    </div>
+    <hr>
+
+    <!-- 실시간 스트리밍 -->
+    <div class="camera-streaming">
+        <h3>실시간 스트리밍</h3>
+        <img src="" alt="Streaming Not Available" width="640" height="480"> <!-- 스트리밍 영상 -->
+    </div>
+    <hr>
+
+    <!-- 로그 메시지 표시 -->
+    <div>
+        <h3>로그 메시지</h3>
+        <div id="messages"></div> <!-- 로그 메시지 영역 -->
+    </div>
+    <hr>
+
+    <!-- 차트 -->
+    <div id="charts">
+        <div class="chart-container">
+            <h3>온습도 변화</h3>
+            <canvas id="tempHumidityChart"></canvas> <!-- 온습도 차트 -->
+        </div>
+        <div class="chart-container">
+            <h3>움직임 감지 횟수</h3>
+            <canvas id="movementChart"></canvas> <!-- 움직임 감지 차트 -->
+        </div>
+    </div>
+</body>
+
+</html>
